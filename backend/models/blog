@@ -1,0 +1,24 @@
+const mongoose = require("mongoose");
+
+const blogSchema = new mongoose.Schema({
+    blogId:{
+        type:"string",
+        required: true,
+    },
+    blogTitle:{
+        type:"string",
+        required: true,
+    },
+    description:{
+        type:"string",
+    },
+    image:{
+        type:"string",
+    },
+    dateAdded:{
+        type:"string",
+        required: true,
+    },
+});
+
+module.exports = Blog = mongoose.model("Blog",blogSchema);
