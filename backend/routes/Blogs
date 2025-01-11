@@ -1,0 +1,44 @@
+const express = require('express');
+const router = express.Router();
+const Blog = require("../models/blog");
+
+
+//test
+router.get('/test',(req,res)=>res.send("Blog routes are working properly!"));
+
+//insert a blog to db
+router.post('/',(req,res)=>{
+    Blog.create(req.body)
+    .then(()=>res.json({msg:"Blog is added successfully!"}))
+    .catch(()=>res.status(400).json({msg:"Blog adding failed!"}));
+});
+
+//get all the blogs in the db
+router.get('/',(req,res)=>{
+    Blog.find()
+    .then((blogs)=>res.json(blogs))
+    .catch(()=>res.status(400).json({msg:"Blog not found"}));
+});
+
+//get a specific blog from the database
+router.get('/:id',(req,res)=>{
+    Blog.findById(req.params.id)
+    .then((blogs)=>res.json(blogs))
+    .catch(()=>res.status(400).json({msg:"Blog not found"}));
+});
+
+//update a specific blog from the database
+router.put('/:id',(req,res)=>{
+    Blog.findByIdAndUpdate(req.params.id,req.body)
+    .then(()=>res.json({msg:"Blog updated successfully!"}))
+    .catch(()=>res.status(400).json({msg:"Blog is not updated successfully"}));
+});
+
+//delete a specific blog from the db
+router.delete('/:id',(req,res)=>{
+    Blog.findByIdAndDelete(req.params.id)
+    .then(()=>res.json({msg:"Blog is deleted successfully!"}))
+    .catch(()=>res.status(400).json({msg:"Blog is not deleted successfully"}))
+});
+
+module.exports = router;
